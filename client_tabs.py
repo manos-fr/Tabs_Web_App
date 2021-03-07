@@ -22,7 +22,9 @@ def tabs(song_name):
         exit(1)
     response = requests.get("http://localhost:3001/song_name?name="+ nameStr)
     tabs = response.json()
-    print(f"Tabs of {nameStr} \n {tabs}" )    
+    tabsStr =''.join(map(str, tabs))
+    formatted_output = tabsStr.replace('\\n', '\n').replace('\\t', '\t')
+    print(f"Tabs of {nameStr}: \n {formatted_output}" )    
     return tabs
 
 if __name__ == '__main__':

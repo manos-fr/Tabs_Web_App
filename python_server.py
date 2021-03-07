@@ -16,7 +16,6 @@ def get_tab():
         # Connect to an existing database
         connection = psycopg2.connect(user="manosdb", password="12345", 
         host="127.0.0.1", port="5432", database="manosdb")
-
         # Create a cursor to perform database operations
         cursor = connection.cursor()
         # Executing a SQL query
@@ -25,6 +24,7 @@ def get_tab():
         with connection:
             cursor.execute(f"SELECT tab FROM songs WHERE name = '{name}'")  
             response = cursor.fetchall()  
+            resp = ''.join(map(str, response))
     except (Exception, Error) as error:
         print("Error while connecting to PostgreSQL", error)
 
@@ -32,9 +32,7 @@ def get_tab():
         if (connection):
             cursor.close()
             connection.close()
-    # listToStr = ' '.join(map(str, response)) 
-    print(response)
-    return json.dumps(response)
+    return json.dumps(resp)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=3001,debug=True,threaded=True)
